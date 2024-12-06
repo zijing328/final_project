@@ -1,6 +1,5 @@
 ---
-title: "Write Up: Institutional and Functional Integration of State-orchestrated regional strategy: Yangtze River Delta"
-date: "12/5/2024"
+title: "Institutional and Functional Integration under State-orchestrated Regional Strategy: Yangtze River Delta (YRD)"
 format: 
   pdf:
     include-in-header: 
@@ -20,9 +19,10 @@ output:
   eval: true
 ---
 
-## Student Information
-Partner1: Zijing Zhao (cnetid:zijingz, github username:zijing328)
-Partner2: Zekai Shen (cnetid:zekaishen, github username:zac-shen)
+
+# Student Information
+## Partner1: Zijing Zhao (cnetid:zijingz, github username:zijing328)
+## Partner2: Zekai Shen (cnetid:zekaishen, github username:zac-shen)
 
 ## 1. Introduction
 Metropolitan areas and urban agglomerations emerging as dynamic units of global competition. This shift catalyzed swift development, establishing these areas as new state space (Brenner, 2004, 2009) through the state regional rescaling process. Inter-city cooperation has emerged as a critical vehicle for promoting regional integration, optimizing resource allocation, and eliminating administrative and market barriers (Zhang et al., 2021; Luo & Shen, 2009). 
@@ -37,12 +37,29 @@ Thus, this study explores how state-orchestrated institutional networks in the Y
 
 
 ## 2. Research Question
+1. How do state-orchestrated institutional networks formed by inter-city cooperation respond to dynamic functional linkages, such as population flows? 
+2. How do different forms of inter-city cooperation respond to population flow?
+
+
 
 ## 3. Data
-The YRD region is selected as the study area due to its advanced economic integration. The region encompasses 41 cities, forming 820 city pairs analyzed from 2018 to 2023. This study employs regression analyses to explore the impact of population flows on inter-city cooperation dynamics.
+The YRD region is selected as the study area due to its advanced economic integration. The region encompasses 41 cities, forming 820 city pairs analyzed from 2018 to 2023. 
+
+The intensity of inter-city cooperation among city pairs is derived from inter-city cooperation news data sourced from the official websites of the 41 city governments in the YRD region. We web scrapped each city government’s news website using the names of the other 40 cities as search keywords. This process produced 1,640 URLs and retrieved 728,677 pieces of government news data. The dataset was subsequently cleaned to remove duplicates and empty entries. A Large Language Model (LLM), GPT 3.5, was employed to categorize the data into four types of inter-city cooperation: study visits, inter-city agreements, inter-city planning projects, and joint conferences. Since this is a large amount of work done in a previous research project and have the privacy issue, this study will not dicuss this in details. But we have provided the data that are able to replicate the plot that we generated.
+
+The intensity of inter-city population flow is measured by the annual inter-city migration index from the AutoNavi. Given the directional nature of the data, where the migration index from city \( i \)  to city \( j \) may differ from that of city \( j \) to city \( i \), an average migration index is calculated for each city pair. We then create the plot using the average migration index, where \( AMI_{ij} \) is the average migration index between city \( i \) and city \( j \), \( MI_{ij} \) is the annual migration index from city \( i \) to city \( j \), and \( MI_{ji} \) follows the same principle.
+$$
+AMI_{ij} = \frac{MI_{ij} + MI_{ji}}{2}
+$$
 
 
-## Interpretation 
 
+## 4. Interpretation 
+
+based on research question describe the features we observed in the plot.
+1. trend of inter-city cooperation from 2018-2023
+2. trend of population flow from 2018-2023
+3. if the trend of inter-city cooperation match with population flow, possible explanation? What kind cooperation can be formed in face of the increasing intensity of population flow.
+4. trends of different forms of inter-city cooperation
 
 
