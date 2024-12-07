@@ -12,10 +12,13 @@ import tempfile
 # Set environment variable to avoid memory leak issues with multithreading
 os.environ['OMP_NUM_THREADS'] = '1'
 
+# Change the directory
+os.chdir('/Users/shenzekai/Documents/GitHub/final_project/shiny-app')
+
 # Load data
-df_migration = pd.read_excel("/Users/shenzekai/Documents/GitHub/30538_final_project/avg_migration_18-23.xlsx")
-df_cooperation = pd.read_excel("/Users/shenzekai/Documents/GitHub/30538_final_project/citypair_output.xlsx", sheet_name="sum")
-city_boundaries = gpd.read_file("/Users/shenzekai/Documents/GitHub/30538_final_project/长三角城市数据/长三角地市_1.shp").to_crs(epsg=3857)
+df_migration = pd.read_excel("data/avg_migration_18-23.xlsx")
+df_cooperation = pd.read_excel("data/citypair_output.xlsx", sheet_name="sum")
+city_boundaries = gpd.read_file("data/shapefile/长三角地市_1.shp").to_crs(epsg=3857)
 
 # Prepare city center dictionary
 city_boundaries['centroid'] = city_boundaries['geometry'].centroid

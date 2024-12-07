@@ -53,12 +53,18 @@ AMI_{ij} = \frac{MI_{ij} + MI_{ji}}{2}
 $$
 
 
-
 ## 4. Interpretation 
 
-based on research question describe the features we observed in the plot.
-1. trend of inter-city cooperation from 2018-2023
-2. trend of population flow from 2018-2023
+After applying the dataset to the research questions, we were able to identify several trends regarding inter-city cooperation and population flow, repectively resembling institutional network space and functional linakge.
+
+First, the shiny-app shows the movement of inter-city cooperation along with the population flow
+
+As shown in the interactive plots, it can be observed that the population flow increased during the given period. It is especially notable that well-developed cities such as Shanghai, Hangzhou, Suzhou and Nanjing served as core cities of migration, which simultaneously transit population among themselves and boosting population migration towards left-behind cities.
+
+The trend of inter-city cooperation shows a similar pattern of an over all increase bolstered by well-developed cities. However, it is noticeable that both population flow and inter-city cooperation faced a drop during 2022, which could result from the intensified COVID policy in China during the year. Both variables showed their rebounce in 2023, justifying an increasing momentum. 
+
+This consistent trend may be explained by the local governments' adherence to the project, and the synergy of institutional workspace and functional linkage. This assumption can be supported by the alignment of lines between the cities that represent inter-city cooperation and population flow respectively. In light of this, we further examined the trends of different types of cooperation, to see if the cooperation is consistent among different type of 
+
 3. if the trend of inter-city cooperation match with population flow, possible explanation? What kind cooperation can be formed in face of the increasing intensity of population flow.
 4. trends of different forms of inter-city cooperation
 
