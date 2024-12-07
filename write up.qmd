@@ -89,15 +89,13 @@ This consistent trend may be explained by the local governments' adherence to th
   \caption{Comparison of Different Cooperation Types}
 \end{figure}
 
-
 ## 5. Limitation and Future Work
 We admit that this study is an simple plot of the trend between insitutional network and functional linkage. We consider employ regression analysis into our further study to prove the correlation between these two variables, other control variables like socioeconomic factors will be included.
-
 
 ```{python}
 #| eval: false
 #| echo: false
-#Plot prep
+# Plot prep
 # package needed
 import pandas as pd
 import geopandas as gpd
@@ -119,6 +117,10 @@ import matplotlib.image as mpimg
 ```{python}
 #| eval: false
 #| echo: false
+
+# We have set the eval and echo to be false because otherwise when we knit the qmd file, both of our computer will show run out of time, and we also tried to call outside .py files but did not work. However, if you wish to test the code, you can change the eval to be true. Apologize for the inconvenience. Thank you. 
+
+global_directory = "/Users/zhaozijing/Documents/GitHub/final_project"
 
 # Inter-City cooperation plots (by types)
 os.environ['OMP_NUM_THREADS'] = '1'
@@ -306,9 +308,7 @@ for type in cooperation_type:
         plt.title(f"Inter-City Cooperation {type} {year}", fontdict={'fontname': 'Times New Roman', 'fontsize': 25})
         plt.axis('off')
         plt.savefig(f"plot/coop_network_{type}_{year}.jpg", format='jpg',dpi=300)
-        plt.show()
-
-
+        
 ```
 
 
@@ -350,5 +350,6 @@ for cooperation_type in cooperation_types:
     # Save the combined plot
     output_path = f"pictures/combined_coop_network_{cooperation_type}.jpg"
     plt.savefig(output_path, dpi=300)
-    plt.show()
 ```
+
+
