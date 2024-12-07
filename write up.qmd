@@ -12,60 +12,35 @@ include-before-body:
       showspaces = false,
       showtabs = false,
       breaksymbolleft={},
-      breaklines
     }
 output:
   echo: true
   eval: true
 ---
-
-
-# Student Information
 ## Partner1: Zijing Zhao (cnetid:zijingz, github username:zijing328)
 ## Partner2: Zekai Shen (cnetid:zekaishen, github username:zac-shen)
 
 ## 1. Introduction
-Metropolitan areas and urban agglomerations emerging as dynamic units of global competition. This shift catalyzed swift development, establishing these areas as new state space (Brenner, 2004, 2009) through the state regional rescaling process. Inter-city cooperation has emerged as a critical vehicle for promoting regional integration, optimizing resource allocation, and eliminating administrative and market barriers (Zhang et al., 2021; Luo & Shen, 2009). 
+In recent context of China’s regional governance, state-orchestrated regional development strategies have been introduced to address the uneven and inadequate regional development. Examples include Yangtze River Delta (YRD), Beijing-Tianjin-Hebei, and Guangdong-Hong Kong-Macao Greater Bay Area. Inter-city cooperation has emerged as a critical vehicle for promoting regional integration, optimizing resource allocation, and eliminating administrative and market barriers. Top-down initiatives paired well-developed cities with left-behind ones. Through this process, new institutional frameworks and political orders have arisen. 
 
-In recent context of China’s state regional rescaling (Wu, 2016; Li & Wu, 2018), the top-down directives have been established to arrange and mandate inter-city cooperation, specifically focusing on pairing well-developed cities with left-behind ones (Jiang et al., 2023). Through this process, new institutional frameworks and political orders have arisen. Regions like the Yangtze River Delta (YRD), Beijing-Tianjin-Hebei, and Guangdong-Hong Kong-Macao Greater Bay Area exemplify state regional rescaling efforts to address unbalanced development through state-orchestrated city-regional governance strategies (Wu, 2016). 
-
-The existing literature outlines several features of Chinese inter-city cooperation. This top-down discursive strategies reflects the political mandates of central governments and requires local governments reaching mutual benefits through inter-city cooperation.  (Li & Wu, 2018; Zhang et al., 2023b; Wang et al., 2021). It is primarily driven by the interests of multi-level governments rather than market factors (Chung, 2015; Zhang et al., 2023a), and is governed by the interaction between innovative institution and functional integration among local governments.  (Luo & Shen, 2009; Chan et al., 2012; Xian et al., 2015; Zhang et al., 2023b). Ultimately, inter-city cooperation functions as a spatial tool for promoting regional integration (Yang et al., 2022).
-
-Although regional cooperation has increased in regions that implemented the state-orchestrated regional development strategy, the effectiveness of such collaborative mechanisms has been questioned. Scholars noted that the outcome of inter-city cooperation are significantly shaped by inter-ministerial, inter-scalar, inter-city, and state-market politics (Xu and Yeh, 2013; Li and Wu, 2018). The state-led top-down approaches frequently conflict with the ideals of mutual benefit, leading to ineffective inter-city cooperation (Wang et al., 2021). Local pushbacks often arise from these political dynamics, diminishing the efficacy of regional collaboration (Taylor, 2012; While et al., 2013), which indicates a discord between top-down state agendas and local priorities (Wang et al., 2021; Tang, 2014; Chen et al., 2017). Therefore, scholars underscore the importance of synchronizing institutional networks formed by inter-city collaboration with the functional linkage of production factors to foster regional coordinated development (Zhang et al., 2023). This raises the question about whether the institutional network established through inter-city cooperation is coupled with functional linkage.
-
-Thus, this study explores how state-orchestrated institutional networks in the YRD respond to functional linkages, particularly population flows. We used  migration data from AutoNavi Map and cooperation data from government websites, categorized into different mechanisms (e.g., study visit, joint conference, inter-city planning project, inter-city agreement) by ChatGPT 3.5. By plotting the dynamic trend of the inter-city cooperation and population flow, we want to observe the interaction of institutional network and functional linkage. We admit that this study is an simple plot of the trend between insitutional network and functional linkage. We consider employ regression analysis into our further study to prove the correlation between these two variables, other control variables like socioeconomic factors will be included.
-
+Although regional cooperation has increased in regions that implemented the state-orchestrated regional development strategy, the effectiveness of such collaborative mechanisms has been questioned. The state-led top-down approaches frequently conflict with the ideals of mutual benefit, leading to ineffective inter-city cooperation. Therefore, it is important for institutional networks formed by inter-city collaboration match with the functional linkage of production factors to foster regional coordinated development. This raises the question about whether the institutional network established through inter-city cooperation is coupled with functional linkage.
 
 ## 2. Research Question
+Therefore, our research question is defined as the following: 
 1. How do state-orchestrated institutional networks formed by inter-city cooperation respond to dynamic functional linkages, such as population flows? 
 2. How do different forms of inter-city cooperation respond to population flow?
 
-
-
 ## 3. Data
-The YRD region is selected as the study area due to its advanced economic integration. The region encompasses 41 cities, forming 820 city pairs analyzed from 2018 to 2023. 
-
-The intensity of inter-city cooperation among city pairs is derived from inter-city cooperation news data sourced from the official websites of the 41 city governments in the YRD region. We web scrapped each city government’s news website using the names of the other 40 cities as search keywords. This process produced 1,640 URLs and retrieved 728,677 pieces of government news data. The dataset was subsequently cleaned to remove duplicates and empty entries. A Large Language Model (LLM), GPT 3.5, was employed to categorize the data into four types of inter-city cooperation: study visits, inter-city agreements, inter-city planning projects, and joint conferences. Since this is a large amount of work done in a previous research project and have the privacy issue, this study will not dicuss this in details. But we have provided the data that are able to replicate the plot that we generated.
-
-The intensity of inter-city population flow is measured by the annual inter-city migration index from the AutoNavi. Given the directional nature of the data, where the migration index from city \( i \)  to city \( j \) may differ from that of city \( j \) to city \( i \), an average migration index is calculated for each city pair. We then create the plot using the average migration index, where \( AMI_{ij} \) is the average migration index between city \( i \) and city \( j \), \( MI_{ij} \) is the annual migration index from city \( i \) to city \( j \), and \( MI_{ji} \) follows the same principle.
-$$
-AMI_{ij} = \frac{MI_{ij} + MI_{ji}}{2}
-$$
-
+The YRD region is selected as the study area due to its advanced economic integration. The region encompasses 41 cities, forming 820 city pairs analyzed from 2018 to 2023. The intensity of inter-city cooperation among city pairs is derived from inter-city cooperation news data sourced from the official websites of the 41 city governments in the YRD region. We web scrapped each city government’s news website using the names of the other 40 cities as search keywords. A Large Language Model (LLM), GPT 3.5, was employed to categorize the data into four types of inter-city cooperation: study visits, inter-city agreements, inter-city planning projects, and joint conferences. The intensity of inter-city population flow is measured by the annual inter-city migration index from the AutoNavi. 
 
 ## 4. Interpretation 
-
 After applying the dataset to the research questions, we were able to identify several trends regarding inter-city cooperation and population flow, repectively resembling institutional network space and functional linakge.
 
-First, the shiny-app shows the movement of inter-city cooperation along with the population flow
-
-As shown in the interactive plots, it can be observed that the population flow increased during the given period. It is especially notable that well-developed cities such as Shanghai, Hangzhou, Suzhou and Nanjing served as core cities of migration, which simultaneously transit population among themselves and boosting population migration towards left-behind cities.
+First, the shiny-app shows the movement of inter-city cooperation along with the population flow. As shown in the interactive plots, it can be observed that the population flow increased during the given period. It is especially notable that well-developed cities such as Shanghai, Hangzhou, Suzhou and Nanjing served as core cities of migration, which simultaneously transit population among themselves and boosting population migration towards left-behind cities.
 
 The trend of inter-city cooperation shows a similar pattern of an over all increase bolstered by well-developed cities. However, it is noticeable that both population flow and inter-city cooperation faced a drop during 2022, which could result from the intensified COVID policy in China during the year. Both variables showed their rebounce in 2023, justifying an increasing momentum. 
 
-This consistent trend may be explained by the local governments' adherence to the project, and the synergy of institutional workspace and functional linkage. This assumption can be supported by the alignment of lines between the cities that represent inter-city cooperation and population flow respectively. In light of this, we further examined the trends of different types of cooperation, to see if the cooperation is consistent among different type of 
+This consistent trend may be explained by the local governments' adherence to the project, and the synergy of institutional workspace and functional linkage. This assumption can be supported by the alignment of lines between the cities that represent inter-city cooperation and population flow respectively. In light of this, we further examined the trends of different types of cooperation, to see if the trend of cooperation is consistent among different types. 
 
-3. if the trend of inter-city cooperation match with population flow, possible explanation? What kind cooperation can be formed in face of the increasing intensity of population flow.
-4. trends of different forms of inter-city cooperation
-
-
+## 5. Limitation and Future Work
+We admit that this study is an simple plot of the trend between insitutional network and functional linkage. We consider employ regression analysis into our further study to prove the correlation between these two variables, other control variables like socioeconomic factors will be included.
