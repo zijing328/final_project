@@ -6,6 +6,15 @@ format:
        text: |
          \usepackage{fvextra}
          \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+         \usepackage{titlesec}
+         \titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+         \titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+         \titlespacing*{\section}{0pt}{2ex}{1ex} 
+         \titlespacing*{\subsection}{0pt}{1ex}{0.5ex}
+         \usepackage{graphicx}
+         \usepackage{float}
+         \usepackage{caption}
+         \usepackage{subcaption}
 include-before-body:
   text: |
     \RecustomVerbatimEnvironment{verbatim}{Verbatim}{
@@ -36,11 +45,310 @@ The YRD region is selected as the study area due to its advanced economic integr
 ## 4. Interpretation 
 After applying the dataset to the research questions, we were able to identify several trends regarding inter-city cooperation and population flow, repectively resembling institutional network space and functional linakge.
 
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{pictures/shiny2018.png}
+    \caption{Shiny 2018}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{pictures/shiny2023.png}
+    \caption{Shiny 2023}
+  \end{subfigure}
+  \caption{Comparison of Shiny-App Results in 2018 and 2023}
+\end{figure}
+
 First, the shiny-app shows the movement of inter-city cooperation along with the population flow. As shown in the interactive plots, it can be observed that the population flow increased during the given period. It is especially notable that well-developed cities such as Shanghai, Hangzhou, Suzhou and Nanjing served as core cities of migration, which simultaneously transit population among themselves and boosting population migration towards left-behind cities.
 
 The trend of inter-city cooperation shows a similar pattern of an over all increase bolstered by well-developed cities. However, it is noticeable that both population flow and inter-city cooperation faced a drop during 2022, which could result from the intensified COVID policy in China during the year. Both variables showed their rebounce in 2023, justifying an increasing momentum. 
 
 This consistent trend may be explained by the local governments' adherence to the project, and the synergy of institutional workspace and functional linkage. This assumption can be supported by the alignment of lines between the cities that represent inter-city cooperation and population flow respectively. In light of this, we further examined the trends of different types of cooperation, to see if the trend of cooperation is consistent among different types. 
 
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{pictures/combined_coop_network_agreement_count.jpg}
+    \caption{Cooperation Type: Agreement}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{pictures/combined_coop_network_project_count.jpg}
+    \caption{Cooperation Type: Project}
+  \end{subfigure}
+  \vfill
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{pictures/combined_coop_network_meeting_count.jpg}
+    \caption{Cooperation Type: Meeting}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{pictures/combined_coop_network_project_count.jpg}
+    \caption{Cooperation Type: Visit}
+  \end{subfigure}
+  \caption{Comparison of Different Cooperation Types}
+\end{figure}
+
+
 ## 5. Limitation and Future Work
 We admit that this study is an simple plot of the trend between insitutional network and functional linkage. We consider employ regression analysis into our further study to prove the correlation between these two variables, other control variables like socioeconomic factors will be included.
+
+
+```{python}
+#| eval: false
+#| echo: false
+#Plot prep
+# package needed
+import pandas as pd
+import geopandas as gpd
+import matplotlib.pyplot as plt
+import matplotlib.lines as mlines
+import matplotlib.colors as mcolors
+from shapely.geometry import LineString
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+import os
+from matplotlib.patches import Patch, PathPatch, Circle,Polygon
+from matplotlib.collections import PatchCollection
+from matplotlib.path import Path
+from matplotlib.lines import Line2D
+import numpy as np
+import matplotlib.image as mpimg
+
+```
+
+```{python}
+#| eval: false
+#| echo: false
+
+# Inter-City cooperation plots (by types)
+os.environ['OMP_NUM_THREADS'] = '1'
+
+# city boundaries data
+city_boundaries = gpd.read_file("data/shapefile/长三角地市_1.shp").to_crs(epsg=3857)
+
+
+df = pd.read_excel("data/citypair_output.xlsx", sheet_name="sum")
+
+# Define a standard mapping for commonly accepted English translations of Chinese city names
+city_name_mapping = {
+    "上海": "Shanghai",
+    "杭州": "Hangzhou",
+    "宁波": "Ningbo",
+    "温州": "Wenzhou",
+    "嘉兴": "Jiaxing",
+    "湖州": "Huzhou",
+    "绍兴": "Shaoxing",
+    "金华": "Jinhua",
+    "台州": "TAIzhou",
+    "舟山": "Zhoushan",
+    "衢州": "Quzhou",
+    "丽水": "Lishui",
+    "南京": "Nanjing",
+    "无锡": "Wuxi",
+    "常州": "Changzhou",
+    "苏州": "SUzhou",
+    "南通": "Nantong",
+    "扬州": "Yangzhou",
+    "镇江": "Zhenjiang",
+    "泰州": "Taizhou",
+    "徐州": "Xuzhou",
+    "盐城": "Yancheng",
+    "淮安": "Huaian",
+    "连云港": "Lianyungang",
+    "宿迁": "Suqian",
+    "芜湖": "Wuhu",
+    "马鞍山": "Maanshan",
+    "铜陵": "Tongling",
+    "安庆": "Anqing",
+    "黄山": "Huangshan",
+    "滁州": "Chuzhou",
+    "阜阳": "Fuyang",
+    "宿州": "Suzhou",
+    "六安": "Luan",
+    "池州": "Chizhou",
+    "宣城": "Xuancheng",
+    "合肥": "Hefei",
+    "淮北": "Huaibei",
+    "蚌埠": "Bengbu",
+    "亳州": "Bozhou",
+    "滁州": "Chuzhou",
+    "淮南": "Huainan",
+}
+
+# Apply the mapping to city1 and city2 columns
+df['cityi'] = df['cityi'].map(city_name_mapping)
+df['cityj'] = df['cityj'].map(city_name_mapping)
+df['sum'] = df['meeting_count'] + df['agreement_count'] + df['project_count'] + df['visit_count']
+
+# function that calculate the center and r of the cutting circle
+def get_circle(x1, y1, x2, y2, x3, y3):
+    a = x1 - x2
+    b = y1 - y2
+    c = x1 - x3
+    d = y1 - y3
+    a1 = ((x1 ** 2 - x2 ** 2) + (y1 ** 2 - y2 ** 2)) / 2.0
+    a2 = ((x1 ** 2 - x3 ** 2) + (y1 ** 2 - y3 ** 2)) / 2.0
+    theta = b * c - a * d
+    if abs(theta) < 1e-7:
+        raise ValueError("Three collinear points do not define a circle.")
+    x0 = (b * a2 - d * a1) / theta
+    y0 = (c * a1 - a * a2) / theta
+    r = np.sqrt((x1 - x0) ** 2 + (y1 - y0) ** 2)
+    return x0, y0, r
+
+# compass function
+def add_north(ax, x, y, text_size, arrow_width, text_pad, arrow_height, line_width, add_circle):
+    x_min, x_max = ax.get_xlim()
+    y_min, y_max = ax.get_ylim()
+    width = x_max - x_min
+    height = y_max - y_min
+
+    left = (x_min + width * (x - arrow_width / 2), y_min + height * (y - arrow_height))
+    right = (x_min + width * (x + arrow_width / 2), left[1])
+    top = (x_min + width * x, y_min + height * y)
+
+    left_patch = Polygon([left, top, (top[0], left[1])], closed=True, edgecolor='black', facecolor='black')
+    ax.add_patch(left_patch)
+
+    right_patch = Polygon([right, top, (top[0], left[1])], closed=True, edgecolor='black', facecolor='white')
+    ax.add_patch(right_patch)
+
+    if add_circle:
+        x0, y0, r = get_circle(left[0], left[1], top[0], top[1], right[0], right[1])
+        circle = Circle((x0, y0), r, edgecolor='black', facecolor='none', linewidth=line_width)
+        ax.add_patch(circle)
+        ax.text(x0, y0 + 1.2*r + text_pad, 'N', horizontalalignment='center', verticalalignment='center', 
+                fontsize=text_size, family='Arial', zorder=5)
+
+
+# differentiate core and non-core cities
+city_names = city_boundaries[['cityE', 'geometry']]
+core_cities = ['Bengbu', 'Changzhou', 'Chuzhou', 'Hangzhou', 'Hefei', 'Huaian', 'Huainan', 'Huangshan', 'Huzhou', 'Jiaxing', 'Liuan', 'Maanshan', 'Nanjing', 'Nantong', 'Ningbo', 'Quzhou', 'Shanghai', 'Shaoxing', 'SUzhou', 'TAIzhou', 'Wuhu', 'Wuxi', 'Xuancheng', 'Yangzhou', 'Zhenjiang', 'Zhoushan']
+city_names['city_type'] = 'peripheral'
+city_names.loc[city_names['cityE'].isin(core_cities), 'city_type'] = 'core'
+
+
+color_map = {'core': 'white', 'peripheral': '#f5f5f5'}
+
+# dictionary for citie centroids
+city_centers = city_boundaries.set_index('cityE')['geometry'].centroid.to_dict()
+
+# create lines using city centroids
+def create_linestring(row):
+    point1 = city_centers[row['cityi']]
+    point2 = city_centers[row['cityj']]
+    return LineString([point1, point2])
+
+df['geometry'] = df.apply(create_linestring, axis=1)
+logistics_network = gpd.GeoDataFrame(df, geometry='geometry', crs=city_boundaries.crs)
+
+years = [2018,2019,2020,2021,2022,2023]
+cooperation_type = ['meeting_count', 'agreement_count', 'project_count', 'visit_count']
+
+# plotting
+for type in cooperation_type:
+    for year in years:
+        fig, ax = plt.subplots(1, figsize=(10, 12))
+        #province_boundaries.plot(ax=ax, color='none', edgecolor='grey')
+        city_boundaries.plot(ax=ax, color='none', edgecolor='grey')
+        # add city categories and names, painting them in different colors
+        for idx, row in city_names.iterrows():
+            city_boundary = city_boundaries[city_boundaries['cityE'] == row['cityE']]
+            city_boundary.plot(ax=ax, color=color_map[row['city_type']], edgecolor='grey')
+            ax.text(row.geometry.centroid.x, row.geometry.centroid.y, row['cityE'], fontsize=8, ha='center', va='center', color='black')
+        # plot logistic lines
+        year_data = logistics_network[logistics_network['year'] == year]
+        year_data.plot(ax=ax, linewidth=year_data[type]/40, color='#000000', zorder=2)
+
+        # mark centroid of specific cities 
+        cities_to_mark = ['Nanjing', 'Hefei', 'Shanghai', 'Hangzhou']
+        patches = []
+        for city in cities_to_mark:
+            city_point = city_centers[city]
+            circle = Circle((city_point.x, city_point.y), 5000, color='red', alpha=0.5)  
+            patches.append(circle)
+        
+        p = PatchCollection(patches, match_original=True, zorder=3)
+        ax.add_collection(p)
+
+        # scale bar
+        scalebar_location = (0.11, 0.06)  
+        scale_length = 100000 
+        x_length = scale_length / (ax.get_xlim()[1] - ax.get_xlim()[0])
+
+        ax.plot([scalebar_location[0], scalebar_location[0] + x_length],
+                [scalebar_location[1], scalebar_location[1]],
+                color='black', transform=ax.transAxes, lw=2)
+
+        # explanary text for scale bar
+        ax.text(scalebar_location[0] + x_length / 2, scalebar_location[1] - 0.01, '100 km',
+                horizontalalignment='center', verticalalignment='top',
+                transform=ax.transAxes, fontsize=12)
+
+        
+        # Compass setting
+        add_north(ax, x=0.88, y=0.95, text_size=10, arrow_width=0.02, 
+                text_pad=0.01, arrow_height=0.1, line_width=0.5, add_circle=True)
+        # add legend
+        legend_elements = [
+        Patch(facecolor='#f5f5f5', edgecolor='lightgrey', label='Periphery'),
+        Patch(facecolor='none', edgecolor='k', label='Core'),
+        Line2D([0], [0], color='#000000', lw=4, label='Cooperation Frequency'),
+        Line2D([0], [0], marker='o', color='w', markersize=10, markerfacecolor='red', label='Provincial Capitals')
+    ]
+
+
+        leg = ax.legend(handles=legend_elements, title='LEGEND', loc='upper left', bbox_to_anchor=(0.092,0.22), fontsize='small', title_fontsize='medium')
+        leg.get_frame().set_linewidth(0.0)
+        ax.set_title(f'Year {year}', loc='center')
+        ax.set_xticks([])
+        ax.set_yticks([])
+        plt.title(f"Inter-City Cooperation {type} {year}", fontdict={'fontname': 'Times New Roman', 'fontsize': 25})
+        plt.axis('off')
+        plt.savefig(f"plot/coop_network_{type}_{year}.jpg", format='jpg',dpi=300)
+        plt.show()
+
+
+```
+
+
+```{python}
+#| eval: false
+#| echo: false
+
+# Integrating the plots by cooperation type
+# Define the years and cooperation types
+years = range(2018, 2024)
+cooperation_types = ['meeting_count', 'agreement_count', 'project_count', 'visit_count']
+
+# Loop through each cooperation type
+for cooperation_type in cooperation_types:
+    file_paths = [
+        f"plot/coop_network_{cooperation_type}_{year}.jpg"
+        for year in years
+    ]
+
+    # Create a figure with 6 subplots
+    fig, axes = plt.subplots(2, 3, figsize=(15, 10))
+    axes = axes.flatten()  # Flatten the 2D array of axes to 1D for easier iteration
+
+    # Loop through file paths and axes to plot each image
+    for ax, file_path, year in zip(axes, file_paths, years):
+        try:
+            img = mpimg.imread(file_path)  # Read the image
+            ax.imshow(img)  # Display the image in the subplot
+            ax.axis('off')  # Hide the axes
+        except FileNotFoundError:
+            print(f"File not found: {file_path}")
+            ax.axis('off')  # If the file is missing, leave the subplot empty
+            
+    fig.suptitle(f'Inter-City Cooperation: {cooperation_type} (2018-2023)', fontsize=28)
+
+    # Adjust layout for better appearance
+    plt.tight_layout()
+
+    # Save the combined plot
+    output_path = f"pictures/combined_coop_network_{cooperation_type}.jpg"
+    plt.savefig(output_path, dpi=300)
+    plt.show()
+```
